@@ -1,5 +1,10 @@
+import re
+
 #main function
 string = input("input the string to inverse: ")
 string.strip()
-words = string.split(" ")
-print(words)
+space_re = re.compile('[ ]+')
+string = space_re.sub(' ', string)
+word_list = string.split(" ")
+result = ' '.join(word_list)
+print(result)
