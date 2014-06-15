@@ -7,7 +7,6 @@ struct ListNode{
     ListNode(int x) : val(x), next(NULL) {}
 };
 
-
 ListNode* mergeTwoLists(ListNode *l1, ListNode *l2){
     ListNode dummy(-1);
     ListNode *p = &dummy;
@@ -18,7 +17,6 @@ ListNode* mergeTwoLists(ListNode *l1, ListNode *l2){
     p->next = (l1 == NULL) ? l2 : l1;
     return dummy.next;
 }
-
 
 ListNode* generateList(int size)
 {
