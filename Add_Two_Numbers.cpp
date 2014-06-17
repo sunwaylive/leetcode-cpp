@@ -9,49 +9,22 @@ struct ListNode{
 
 ListNode* addTwoNumbers(ListNode *l1, ListNode *l2)
 {
-    int carry = 0, value = 0;
     ListNode dummy(-1);
     ListNode *p = &dummy;
-    for(; l1 != NULL && l2 != NULL; l1 = l1->next, l2 = l2->next){
-        value = l1->val + l2->val + carry;
+    int carry = 0;
+    for(ListNode *pa = l1, *pb = l2;
+        pa != NULL || pb != NULL;
+        pa = (pa == NULL) ? NULL : pa->next, pb = (pb == NULL) ? NULL : pb->next)
+    {
+        const int ipa = (pa == NULL) ? 0 : pa->val;
+        const int ipb = (pb == NULL) ? 0 : pb->val;
+        int value = ipa + ipb + carry;
         carry = value / 10;
-        ListNode *tmp = (ListNode *)malloc(sizeof(ListNode));
-        tmp->val = value % 10;
-        tmp->next = NULL;
-        p->next = tmp;
+        p->next = new ListNode(value % 10);
         p = p->next;
     }
 
-    while(l1 != NULL){
-        ListNode *tmp = (ListNode *)malloc(sizeof(ListNode));
-        value = l1->val + carry;
-        tmp->val = value % 10;
-        tmp->next = NULL;
-        p->next = tmp;
-        carry = value / 10;
-        l1 = l1->next;
-        p = p->next;
-    }
-
-    while(l2 != NULL){
-        ListNode *tmp = (ListNode *)malloc(sizeof(ListNode));
-        value = l2->val + carry;
-        tmp->val = value % 10;
-        tmp->next = NULL;
-        p->next = tmp;
-        carry = value / 10;
-        l2 = l2->next;
-        p = p->next;
-    }
-
-    if(l1 == NULL && l2 == NULL && carry !=0){
-        ListNode *tmp = (ListNode *)malloc(sizeof(ListNode));
-        tmp->val = carry;
-        tmp->next = NULL;
-        p->next = tmp;
-        p = p->next;
-    }
-
+    if(carry > 0) { p->next = new ListNode(carry); }
     return dummy.next;
 }
 
