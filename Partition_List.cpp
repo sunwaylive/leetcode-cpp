@@ -7,6 +7,7 @@ struct ListNode{
     ListNode(int x) : val(x), next(NULL) {}
 };
 
+//O(n^2) solution
 ListNode* partition(ListNode* head, int x)
 {
     ListNode dummy(INT_MIN);
@@ -25,6 +26,26 @@ ListNode* partition(ListNode* head, int x)
         }else break;
     }
     return dummy.next;
+}
+
+//space complexity: O(1), time complexity: O(n)
+ListNode* partition2(ListNode *head, int x)
+{
+    ListNode left_dummy(-1);
+    ListNode right_dummy(-1);
+
+    ListNode *left_cur = &left_dummy;
+    ListNode *right_cur = &right_dummy;
+
+    for(ListNode *cur = head; cur; cur = cur->next){
+        if(cur->val < x) { left_cur->next = cur; left_cur = left_cur->next; }
+        else { right_cur->next = cur; right_cur = right_cur->next; }
+   }
+
+    left_cur->next = right_dummy.next;
+    right_cur->next = NULL;
+
+    return left_dummy.next;
 }
 
 ListNode* generateList(int size)
@@ -57,7 +78,7 @@ int main()
     ListNode *l2 = generateList(10);
     print_list(l2);
 
-    ListNode *re = partition(l2, l2->val);
+    ListNode *re = partition2(l2, l2->val);
     print_list(re);
     return 0;
 }
