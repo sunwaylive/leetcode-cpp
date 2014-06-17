@@ -52,6 +52,29 @@ ListNode* reverseBetween(ListNode *head, int m, int n)
     return dummy.next;
 }
 
+ListNode* reverseBetween2(ListNode *head, int m, int n)
+{
+    ListNode dummy(-1);
+    dummy.next = head;
+    ListNode *prev = &dummy;
+
+    for(int i = 0; i < m-1; ++i)
+        prev = prev->next;
+
+    ListNode * const head2 = prev;
+    prev = head2->next;
+    ListNode *cur = prev->next;
+    for(int i = m; i < n; ++i){
+        prev->next = cur->next;//save for the next cur position
+        //head-insertion building linked list
+        cur->next = head2->next;
+        head2->next = cur;
+        cur = prev->next;
+    }
+    cout<<dummy.next->val <<endl;
+    return dummy.next;
+}
+
 ListNode* generateList(int size)
 {
     ListNode *head = (ListNode*)malloc(sizeof(ListNode));
@@ -82,7 +105,7 @@ int main()
     ListNode *l2 = generateList(5);
     print_list(l2);
 
-    ListNode *re = reverseBetween(l2, 1, 4);
+    ListNode *re = reverseBetween2(l2, 1, 4);
     print_list(re);
     return 0;
 }
