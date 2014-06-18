@@ -14,9 +14,15 @@ public:
         if(this->memory->next == NULL) return -1;
 
         CacheNode *tmp = memory->next;
-        for(; tmp; tmp = tmp->next)
-            if(tmp->key == key)
+        CacheNode *prev = memory;
+        for(; tmp; prev = tmp, tmp = tmp->next){
+            if(tmp->key == key){
+                prev->next = tmp->next;
+                tmp->next = memory->next;
+                memory->next = tmp;
                 return tmp->val;
+            }
+        }
         return -1;
     }
 
