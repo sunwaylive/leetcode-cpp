@@ -72,6 +72,9 @@ void recoverTree(TreeNode *root)
     swap(broken.first->val, broken.second->val);
 }
 
+
+//this answer is easy to understand
+
 // class Solution {
 // public:
 //     TreeNode *s1,*s2,*pre;

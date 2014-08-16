@@ -20,7 +20,10 @@ ListNode* findInsertPos(ListNode *head, int x)
 ListNode* insertionSortList(ListNode *head)
 {
     ListNode dummy(INT_MIN);
-    for(ListNode *cur = head; cur != NULL;){
+    ListNode *cur = head;
+    //head-> ..->.. ->..cur->..
+    //dummy->..->..->..pos->..
+    while(cur != NULL){
         ListNode *pos = findInsertPos(&dummy, cur->val);
         ListNode *tmp = cur->next;
         cur->next = pos->next;
@@ -36,11 +39,11 @@ ListNode* generateList(int size)
     ListNode *head = (ListNode*)malloc(sizeof(ListNode));
     ListNode *cur = head;
     for(int i = 0; i < size; i++){
-    ListNode *p = (ListNode*)malloc(sizeof(ListNode));
-    p->val = rand() % 100;
-    p->next = NULL;
-    cur->next = p;
-    cur = cur->next;
+        ListNode *p = (ListNode*)malloc(sizeof(ListNode));
+        p->val = rand() % 100;
+        p->next = NULL;
+        cur->next = p;
+        cur = cur->next;
     }
     return head->next;
 }

@@ -19,7 +19,6 @@ ListNode* findPos(ListNode* head, int p)
 ListNode* rotateList(ListNode *head, int k)
 {
     if (!head) return head;
-    //make a circle
     ListNode *tmp = head;
     int size = 1;
     while(tmp->next != NULL){
@@ -33,7 +32,9 @@ ListNode* rotateList(ListNode *head, int k)
     ListNode *tail = tmp;
     ListNode *new_head = findPos(head, size - k + 1);
     ListNode *prev = findPos(head, size - k);
+    //make a circle
     tail->next = head;
+    //cut the list
     prev->next = NULL;
     return new_head;
 }

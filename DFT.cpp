@@ -76,8 +76,8 @@ void DFTcore(int (*edge)[VERTEXNUM],int i,int* vertexStatusArr){
 
         int j;
         for(j=0;j<VERTEXNUM;j++){
-                if(edge[i][j] == 1){
-                        DFTcore(edge, j, vertexStatusArr);
-                }
+            if(edge[i][j] == 1){
+                DFTcore(edge, j, vertexStatusArr);
+            }
         }
 }

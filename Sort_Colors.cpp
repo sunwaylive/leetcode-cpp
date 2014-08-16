@@ -24,8 +24,8 @@ void countingSort(int A[], int n, int k)
     printArray(count, k+1);
 
     int *B = (int*) malloc(sizeof(int) * n);
-    //reverse traversal for stability
-    for(int i = n-1; i >=0; --i){
+    //sort, reverse traversal for stability
+    for(int i = n-1; i >= 0; --i){
         B[count[A[i]] - 1] = A[i];//attention count[A[i]] - 1: real position index
         count[A[i]]--;
     }
@@ -33,7 +33,8 @@ void countingSort(int A[], int n, int k)
     for(int i = 0; i < n; ++i)
         A[i] = B[i];
 
-    printArray(A, n);
+    free(B);
+    free(count);
 }
 
 void sortColors(int A[], int n) {
