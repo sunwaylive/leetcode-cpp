@@ -1,0 +1,33 @@
+class Solution:
+    def evalRPN(self, tokens):
+        operand_stack = []
+        for t in tokens:
+            if t == '+':
+                second_operand = operand_stack.pop()
+                first_operand = operand_stack.pop()
+                operand_stack.append(first_operand + second_operand)
+            elif t == '-':
+                second_operand = operand_stack.pop()
+                first_operand = operand_stack.pop()
+                operand_stack.append(first_operand - second_operand)
+            elif t == '*':
+                second_operand = operand_stack.pop()
+                first_operand = operand_stack.pop()
+                operand_stack.append(first_operand * second_operand)
+            elif t == '/':
+                second_operand = operand_stack.pop()
+                first_operand = operand_stack.pop()
+                if second_operand == 0.0:
+                    continue;
+                else:
+                    operand_stack.append(first_operand / second_operand)
+            else:
+                operand_stack.append(float(t))
+        return operand_stack.pop()
+
+
+#main function
+sln = Solution()
+
+result = sln.evalRPN(tokens)
+print(result)

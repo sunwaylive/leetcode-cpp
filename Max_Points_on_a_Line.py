@@ -5,33 +5,7 @@ class Point:
     
 class Solution:
     def maxPoints(self, points):
-        if len(points) <= 1:
-            return len(points)
-            
-        max_num = 0
-        for i in range(len(points)):            
-            p1 = points[i]
-            islope = {}
-            iVertical = 0
-            iSame = 0
-            iMax = 0
-            for j in range(i+1, len(points)):
-                p2 = points[j]
-                if p1.x == p2.x:
-                    if p1.y == p2.y:
-                        iSame += 1
-                    else:
-                        iVertical += 1                    
-                else:
-                    k = (p1.y - p2.y) * 1.0 / (p1.x - p2.x)
-                    if k in islope.keys():
-                        islope[k] += 1
-                    else:
-                        islope[k] = 1
-                    iMax = max(iMax, islope[k])
-            iMax = max(iMax, iVertical) + iSame
-            max_num = max(iMax, max_num)
-        return max_num + 1
+        
 
 #main function
 sln = Solution()
