@@ -40,13 +40,38 @@ public:
         }
         return result;
     }
+
+    /* 2016 Second Time Just do it */
+    int MinPathTotal(vector<vector<int> > &triangle) {
+        int n = triangle.size();
+        vector<int> dp(n + 1, 0);
+        vector<int> next(n + 1, 0);
+
+        dp[0] = triangle[0][0];
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j <= i; ++j) {
+                if (j == 0) next[j] = dp[j] + triangle[i][j];        // no prev one
+                else if (j == i) next[j] = dp[j-1] + triangle[i][j]; // no current one
+                else next[j] = min(dp[j-1] + triangle[i][j], dp[j] + triangle[i][j]); // if have both, get the minimum
+            }
+
+            swap(dp, next);
+        }
+
+        int res = dp[0];
+        for (int i = 0; i < n; ++i) {
+            res = min(res, dp[i]);
+        }
+
+        return res;
+    }
 };
 
 int main()
 {
     vector<int> row1({2});
     vector<int> row2({3, 4});
-    vector<int> row3({6, 5, 7});
+    vector<int> row3({1, 5, 7});
     vector<int> row4({4, 1, 8, 3});
 
     vector<vector<int> > triangle;
@@ -55,6 +80,7 @@ int main()
     triangle.push_back(row3);
     triangle.push_back(row4);
     Solution sln;
-    cout<<sln.minimumTotal2(triangle)<<endl;
+    //cout<<sln.minimumTotal2(triangle)<<endl;
+    cout << sln.MinPathTotal(triangle) << endl;
     return 0;
 }
