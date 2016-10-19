@@ -42,6 +42,7 @@ public:
     }
 
     /* 2016 Second Time Just do it */
+    // dp solution
     int MinPathTotal(vector<vector<int> > &triangle) {
         int n = triangle.size();
         vector<int> dp(n + 1, 0);
@@ -65,13 +66,33 @@ public:
 
         return res;
     }
+
+    /* 2016 Second Time Just do it */
+    // dfs solution
+    // dfs[x][y]: 从(x,y)到达三角形底部的最短路径
+    int dfs(vector<vector<int> > &triangle, vector<vector<int> > &hash, int x, int y) {
+        if (x == triangle.size() - 1)
+            return triangle[x][y];
+        else if (hash[x][y] != -1)
+            return hash[x][y];
+
+        hash[x][y] = min(dfs(triangle, hash, x+1, y), dfs(triangle, hash, x+1,y+1)) + triangle[x][y];
+        return hash[x][y];
+    }
+
+    int MinPathTotal2(vector<vector<int> > &triangle) {
+        int n = triangle.size();
+        vector<vector<int> > hash(n, vector<int>(n, -1));
+        dfs(triangle, hash, 0, 0);
+        return hash[0][0];
+    }
 };
 
 int main()
 {
     vector<int> row1({2});
     vector<int> row2({3, 4});
-    vector<int> row3({1, 5, 7});
+    vector<int> row3({6, 5, 7});
     vector<int> row4({4, 1, 8, 3});
 
     vector<vector<int> > triangle;
@@ -81,6 +102,6 @@ int main()
     triangle.push_back(row4);
     Solution sln;
     //cout<<sln.minimumTotal2(triangle)<<endl;
-    cout << sln.MinPathTotal(triangle) << endl;
+    cout << sln.MinPathTotal2(triangle) << endl;
     return 0;
 }
