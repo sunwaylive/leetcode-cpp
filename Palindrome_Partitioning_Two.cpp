@@ -3,7 +3,7 @@
 #include <string>
 using namespace std;
 
-class Solution {
+class SolutionOld {
 public:
     int minCut(string s){
         if(s.empty()) return -1;
@@ -62,6 +62,42 @@ public:
 
 public:
     int minCutNum;
+};
+
+/* 2016 Second Time Just do it */
+class Solution {
+public:
+    /*DP solution: TLE Wrong, 掌握思想
+     * "aab" -> "$aab"
+     * dp[i]:表示截止i-th字符，需要的最少的cut次数
+     * dp[i] = dp[j] + 1, 对于满足这个条件的j:  0 <= j < i, 并且str[j+1, i]是回文
+     * dp[0] = -1; 这样能保证 对于原来的"aab"，首号位置的cut值为0
+     * ans: dp[n-1], 最后一个元素
+     * */
+    int minCut(string s) {
+        s.insert(0, "$");
+        int n = s.size();
+        const int INF = 10000000;
+        vector<int> dp(n, INF);
+        dp[0] = -1;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (isPa(s, j+1, i)) {
+                    dp[i] = min(dp[i], dp[j] + 1);
+                }
+            }
+        }
+        return dp[n-1];
+    }
+
+    bool isPa(string &s, int start, int end) {
+        while (start < end) {
+            if (s[start++] != s[end--]) {
+                return false;
+            }
+        }
+        return true;
+    }
 };
 
 int main()

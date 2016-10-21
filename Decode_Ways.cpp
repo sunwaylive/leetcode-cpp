@@ -1,9 +1,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <stdlib.h>
 using namespace std;
 
-class Solution {
+class SolutionOld {
 public:
     //http://www.cnblogs.com/remlostime/archive/2012/10/30/2746791.html
     int getF(int index){
@@ -35,10 +36,56 @@ private:
     vector<int> f;
 };
 
+/* 2016 Second Time Just do it */
+class Solution {
+public:
+    /*
+     *DP
+     * S(tate): dp[i]:前i个字符的解码方式总数
+     * F(unction): dp[i] = sum{dp[j]}, 其中：j满足条件：0 <= j < i && CanDecode(j+1, i)
+     * I(init): dp[0] = 1
+     * A(nswer): dp[n-1]
+     * */
+    int numDecodings(string s) {
+        if (s.empty()) return 0;
+
+        s.insert(0, "$");
+        const int n = s.size();
+        vector<int> dp(n, 0);
+        dp[0] = 1;
+        for (int i = 1; i < n; ++i) {
+            for (int j = 0; j < i; ++j) {
+                if (i - j > 2)
+                    continue; // 超过26
+
+                if (dp[j] > 0 && CanDecode(s, j+1, i))
+                    dp[i] += dp[j]; // dp[j]种切分方式，剩下的一段可切分
+            }
+            // cout << dp[i] << " ";
+        }
+        // cout << endl;
+
+        return dp[n-1];
+    }
+
+    // 3位数及以上的都被屏蔽了
+    bool CanDecode(string &s, int start, int end) {
+        string sub_str = s.substr(start, end - start + 1);
+        // 处理这种 "01", "02"...
+        if (sub_str[0] == '0')
+            return false;
+
+        int num = strtol(sub_str.c_str(), NULL, 10);
+        // cout << num << endl;
+
+        return num >= 1 && num <= 26;
+    }
+};
+
 int main()
 {
-    string s("12");
+    string s("423");
     Solution sln;
-    cout<<sln.numDecodings2(s)<<endl;
+    cout << sln.numDecodings(s) << endl;
     return 0;
 }

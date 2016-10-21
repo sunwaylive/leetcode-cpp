@@ -1,7 +1,8 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class Solution {
+class SolutionOld {
 public:
     int jump(int A[], int n) {
         int result = 0;
@@ -17,10 +18,35 @@ public:
     }
 };
 
+/* 2016 Second Time Just do it */
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        if (nums.empty()) return 0;
+
+        int n = nums.size();
+        const int INF = 1000000;
+        vector<int> dp(n, INF);
+        dp[0] = 0;
+        for (int i = 1; i < n; ++i) {
+            // 从前往后，从后往前一个样
+            // for (int j = i-1; j >= 0; --j)
+            for (int j = 0; j < i; ++j) {
+                if (dp[j] != INF && nums[j] >= i - j) {
+                    dp[i] = min(dp[i], dp[j] + 1);
+                } // end if
+            } // end for j
+        } // end for i
+
+        // You can assume that you can always reach the last index.
+        return dp[n-1];
+    }
+};
+
 int main()
 {
-    int A[] = {2, 3, 1, 1, 4};
+    vector<int> w({2, 1, 2, 0, 4});
     Solution sln;
-    cout<<sln.jump(A,sizeof(A) / sizeof(A[0]))<<endl;
+    cout << sln.jump(w) << endl;
     return 0;
 }
